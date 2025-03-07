@@ -5,11 +5,9 @@ from pathlib import Path
 from sqlalchemy import create_engine, text
 from urllib.parse import quote_plus
 
-pd.set_option('display.max_columns',10)
-
 
 def ReadClimateDB(staid,yr,fields=None):
-    engine = create_engine(fr"postgresql+psycopg2://postgres:%s@localhost/postgres" % quote_plus("Fsga@1313"))
+    engine = create_engine("""INSERT DATABASE CONNECTION STRING"""))
     conn = engine.connect()
 
     select_fields = r'*' if not fields else ', '.join(fields)
@@ -39,7 +37,7 @@ def GetDataDict(input_cities=[]):
     return citydict
 
 
-def CreateHeatmap(datadf,outpath=r"C:\Users\kdh13\OneDrive\Documents\Python\Climate Graphs\thisimage_ATLdelta10d.png"):
+def CreateHeatmap(datadf,outpath="""INSERT DEFAULT OUTPUT PATH"""):
     datadf = pd.DataFrame(datadf,index=[f'h{h}' for h in range(datadf.shape[0])],columns=[c for c in range(datadf.shape[1])])
 
     #Create color map of temperatures and color boundaries of temperature cutoffs using matplotlib
@@ -98,7 +96,6 @@ def RenderCityChange(input_cities=[],avgdays=7):
 
         dftemps = dfjoin[['hly_temp_normal','hly_temp_normal_20']]
         mat = pd.crosstab(dfjoin.hour,dfjoin.date,dfjoin.deltaTemp,aggfunc='mean').to_numpy()
-        #mat = pd.crosstab(dfjoin.hour,dfjoin.date,dfjoin.hly_temp_normal,aggfunc='mean').to_numpy()
         dfdict['dftemps'] = dftemps
         dfdict['deltamat'] = mat
         print(mat.shape,mat.min(),mat.max())
